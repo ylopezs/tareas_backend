@@ -13,6 +13,13 @@ git clone https://github.com/ylopezs/tareas_backend.git
 
 _Node, npm, Mondodb_
 
+## Ejecucion
+
+```
+>npm install
+>npm start
+```
+
 
 ## Ejecutando pruebas
 
