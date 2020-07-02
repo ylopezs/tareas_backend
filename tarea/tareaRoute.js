@@ -8,5 +8,5 @@ module.exports = function(router) {
     router.get('/tareas', jwtCheck, tareaController.getTareas);
     router.get('/tarea/:id', jwtCheck, tareaController.getTarea);
     router.put('/actualizartarea/:id', jwtCheck, tareaController.updateTarea);
-    router.delete('/|/:id', jwtCheck, tareaController.removeTarea);
+    router.delete('/eliminartarea/:id', jwtCheck, tareaController.removeTarea);
 }

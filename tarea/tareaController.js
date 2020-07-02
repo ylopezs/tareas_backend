@@ -21,7 +21,7 @@ exports.createTarea = function (req, res, next) {
     })
 }
 
-//traer solo las del usuario
+//trae solo las del usuario
 exports.getTareas = function(req, res, next) {
 
     Tarea.get({usuario: req.tokenData.id}, function(err, tareas) {
@@ -65,7 +65,7 @@ exports.updateTarea = function(req, res, next) {
             })
         }
         res.json({
-            message : "Tarea actualizada satisfactoriamente"
+            tarea
         })
     })
 }
