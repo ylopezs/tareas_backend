@@ -5,21 +5,20 @@ const bcrypt = require('bcryptjs');
 const SECRET_KEY = 'esto_deberia_cambiar_periodicamente';
 
 exports.createUser = (req, res, next) => {
+    console.log("que llega ", req.body)
     const newUser = {
         name: req.body.name,
         email: req.body.email,
         password: bcrypt.hashSync(req.body.password)
     }
 
-    console.log('----->pego register', req.body);
-
     User.create(newUser, (err, user) => {
-        if (err && err.code === 11000) return res.status(409).send('Email already exists');
+        if (err && err.code === 11000) return res.status(409).send('Email ya ha sido registrado');
 
         if(err) return res.status(500).send('Error creando Usuario'+err);
 
         const expiresIn = 24*60*60; //TODO esto debería ser una constante definida con el cliente
-        const acccesToken = jwt.sign({id: user.id},
+        const accessToken = jwt.sign({id: user.id},
             SECRET_KEY, 
             {expiresIn: expiresIn});
         
@@ -27,7 +26,7 @@ exports.createUser = (req, res, next) => {
             userId: user.id,
             name: user.name,
             email: user.email,
-            acccesToken: acccesToken,
+            accessToken: accessToken,
             expiresIn: expiresIn
         }
         
@@ -55,7 +54,7 @@ exports.loginUser = (req, res, next) => {
             const resultPassword = bcrypt.compareSync(userData.password, user.password);
             if(resultPassword){
                 const expiresIn = 24*60*60; //TODO no quemar esto
-                const acccesToken = jwt.sign({id: user.id}, 
+                const accessToken = jwt.sign({id: user.id}, 
                     SECRET_KEY,
                     {expiresIn: expiresIn});
                 
@@ -64,7 +63,7 @@ exports.loginUser = (req, res, next) => {
                     userId: user.id,
                     name: user.name,
                     email: user.email,
-                    acccessToken: acccesToken,
+                    accessToken: accessToken,
                     expiresIn: expiresIn
                 }
                 res.send({ responseBody });
